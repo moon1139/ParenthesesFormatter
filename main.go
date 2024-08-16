@@ -7,36 +7,22 @@ import (
 )
 
 func main() {
-	inputFile, err := os.Open("input.txt") // Open the input file
-	if err != nil {
-		fmt.Println("Error opening input file:", err)
-		return
-	}
-	defer inputFile.Close()
-
-	outputFile, err := os.Create("output.txt") // Create the output file
-	if err != nil {
-		fmt.Println("Error creating output file:", err)
-		return
-	}
-	defer outputFile.Close()
-
-	scanner := bufio.NewScanner(inputFile)
-	writer := bufio.NewWriter(outputFile)
+	scanner := bufio.NewScanner(os.Stdin)
+	writer := bufio.NewWriter(os.Stdout)
 
 	for scanner.Scan() {
 		expression := scanner.Text()
 		result := formatParentheses(expression)
 		
-		outputConsole := fmt.Sprintf("%s => %s\n", expression, result)
+		// outputConsole := fmt.Sprintf("%s => %s\n", expression, result)
+		// fmt.Print(outputConsole) 	   // Print to console
 		outputLine := fmt.Sprintf("%s\n", result)
-		fmt.Print(outputConsole) 	   // Print to console
-		writer.WriteString(outputLine) // Write to output file
+		writer.WriteString(outputLine)     // Write to stdout
 	}
 
 	if err := scanner.Err(); err != nil {
-		fmt.Println("Error reading input file:", err)
+		fmt.Println("Error reading input:", err)
 	}
 
-	writer.Flush() // Ensure all data is written to the file
+	writer.Flush() // Ensure all data is written to stdout
 }
