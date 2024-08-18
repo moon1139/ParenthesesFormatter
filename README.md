@@ -1,10 +1,21 @@
-## Run by executable file 
-- Apologies for not having exe file here. 
- Due to gmail policy I cannot sent zip file with executables inside
- - Therefore, please build the executable file first if you want to use this method
-- For windows environment. We could either double click [ParenthesesFormatter.exe](ParenthesesFormatter.exe) OR 
-- Use powershell or command line `.\ParenthesesFormatter.exe` to run.
-- ParenthesesFormatter will take [input.txt](input.txt) as input and output result to [output.txt](output.txt) line by line.
+## Run by online IDE
+- Navigate to \ParenthesesFormatter\ForOnlineIDE
+- Simply copy whole chunk of code
+- Paste it to https://nextleap.app/online-compiler/go-programming
+- Fill our input and run
+- You can find sample input in the input.txt file
+
+## Run by go command
+- Install go first https://go.dev/doc/install
+- Navigate to /ParenthesesFormatter
+- `go run .` 
+
+## Run by executable file
+- Please build the executable file first if you want to use this method
+- For windows environment, use powershell or command line `.\ParenthesesFormatter.exe` to run.
+- For Mac you should able to run by `./hello` once executable is built
+- ParenthesesFormatter will take stdin as input and output to stdout (need to ctrl+c to stop then you can see stdout)
+- Support mutiple line input
 - For example,
 #### input file: 
 ```
@@ -30,7 +41,7 @@ A*(B+C)
 ## Build executable file
 - We need to install go first https://go.dev/doc/install
 - Change to directory \ParenthesesFormatter
-- run `go build ./...` to build whole project. This will create/renew our [ParenthesesFormatter.exe](ParenthesesFormatter.exe)
+- run `go build ./...` to build whole project. This will create/renew our [ParenthesesFormatter.exe](ParenthesesFormatter.exe) or other executables.
 
 ## Run tests via VScode
 - After we've installed GO and VScode
