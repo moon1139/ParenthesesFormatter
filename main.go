@@ -1,9 +1,9 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
 	"os"
-	"bufio"
 )
 
 func main() {
@@ -13,11 +13,11 @@ func main() {
 	for scanner.Scan() {
 		expression := scanner.Text()
 		result := formatParentheses(expression)
-		
+
 		// outputConsole := fmt.Sprintf("%s => %s\n", expression, result)
 		// fmt.Print(outputConsole) 	   // Print to console
 		outputLine := fmt.Sprintf("%s\n", result)
-		writer.WriteString(outputLine)     // Write to stdout
+		writer.WriteString(outputLine) // Write to stdout
 	}
 
 	if err := scanner.Err(); err != nil {

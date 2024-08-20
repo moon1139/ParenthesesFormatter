@@ -10,6 +10,15 @@ func isOperator(r rune) bool {
 	return strings.ContainsRune(operators, r)
 }
 
+func isNegativeNumber(expRunes []rune, k int) bool {
+	if expRunes[k] == '-' && k==0 {
+		return true 									// [-5 ... ], expRunes[k] is a negative sign not an operator
+	} else if expRunes[k] == '-' && (expRunes[k-1] == '(' || expRunes[k-1] == '*' || expRunes[k-1] == '/') {
+		return true 								    // (-5) or A*-5 or A/-5 expRunes[k:k+2] are negative number, expRunes[k] is a negative sign
+	}
+	return false
+}
+
 func formatParentheses(expression string) string {
 	expRunes := []rune(expression)
 	n := len(expression)
@@ -46,7 +55,7 @@ func formatParentheses(expression string) string {
 	}	
 
 	for k := 0; k < n; k++ {
-		if isOperator(expRunes[k]) {
+		if isOperator(expRunes[k]) && !isNegativeNumber(expRunes, k) {
 			op:= expRunes[k]
 			lastIndexOfOperator[op] = k					// continuously update index of last seen op
 		}
@@ -72,20 +81,25 @@ func formatParentheses(expression string) string {
 			}
 
 			delFlag := false
-			if i > 0 && j+1 < n && expRunes[i-1] == '(' && expRunes[j+1] == ')' { 		// ((scope))
+			if i > 0 && j < n-1 && expRunes[i-1] == '(' && expRunes[j+1] == ')' { 		// ((scope))
 				delFlag = true
 			}
 			if !hasOperator['+'] && !hasOperator['*'] && !hasOperator['-'] && !hasOperator['/'] { // (no op here)
 				delFlag = true
 			}
 
+			
 			if lastOperator == '/' { 													// /(scope)
 				// delFlag = false // for human readable
 			} else if lastOperator == '-' && (hasOperator['+'] || hasOperator['-']) { 	// -( + or - )
 				// delFlag = false // for human readable
 			} else if !hasOperator['-'] && !hasOperator['+'] { 							// (* or /)
 				delFlag = true
-			} else if (lastOperator == '\x00' || lastOperator == '+' || lastOperator == '-') && (
+			} else if (i > 0 && j < n-1) && (
+				       expRunes[i-1] == '(' || lastOperator == '+' || lastOperator == '-') && (
+					   expRunes[j+1] == ')' || nextOperator == '+' || nextOperator == '-') { // ((scope) AND (scope))
+		 		delFlag = true
+	 		} else if (lastOperator == '\x00' || lastOperator == '+' || lastOperator == '-') && (
 					   nextOperator == '\x00' || nextOperator == '+' || nextOperator == '-') { // noop or + or - (scope) AND (scope) noop or + or -
 				delFlag = true
 			}
