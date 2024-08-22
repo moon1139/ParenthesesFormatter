@@ -11,9 +11,11 @@ func isOperator(r rune) bool {
 }
 
 func isNegativeSign(expRunes []rune, k int) bool {
-	if expRunes[k] == '-' && k == 0 {
+	n := len(expRunes)
+	if (k == 0 && expRunes[k] == '-') && (
+		k+1 < n && expRunes[k+1] != '(') {
 		return true 												// [-5 ... ], expRunes[k] is a negative sign not an operator
-	} else if expRunes[k] == '-' && (expRunes[k-1] == '(' || expRunes[k-1] == '*' || expRunes[k-1] == '/') {
+	} else if (k > 0 && expRunes[k] == '-') && (expRunes[k-1] == '(' || expRunes[k-1] == '*' || expRunes[k-1] == '/') {
 		return true 												// (-5) or A*-5 or A/-5, means expRunes[k:k+2] are negative number
 	}
 	return false
