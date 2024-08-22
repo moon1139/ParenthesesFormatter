@@ -122,6 +122,10 @@ func formatParentheses(expression string) string {
 			if delFlag {
 				reserve[i] = false
 				reserve[j] = false
+				m := len(operatorStacks)
+				if m>0 {
+					operatorStacks[m-1] = append(operatorStacks[m-1], currentOperators...) 			// add currentOperators back to previous level of operatorStacks when parentheses released
+				}
 			}
 		}
 	}
