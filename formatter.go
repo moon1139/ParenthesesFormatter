@@ -97,7 +97,7 @@ func formatParentheses(expression string) string {
 			hasOperator := getOperatorMap(currentOperators)
 
 			delFlag := false
-			if i > 0 && j < n-1 && expRunes[i-1] == '(' && expRunes[j+1] == ')' { 					// ((scope))
+			if i > 0 && j < n-1 && expRunes[i-1] == '(' && expRunes[j+1] == ')' && !isNegativeSign(expRunes, i+1) { // ((scope))
 				delFlag = true
 			}
 
